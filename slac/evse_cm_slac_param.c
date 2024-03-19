@@ -138,9 +138,9 @@ signed evse_cm_slac_param (struct session * session, struct channel * channel, s
 		HomePlugHeader1 (& confirm->homeplug, HOMEPLUG_MMV, (CM_SLAC_PARAM | MMTYPE_CNF));
 		memcpy (confirm->MSOUND_TARGET, broadcast, sizeof (confirm->MSOUND_TARGET));
 		confirm->NUM_SOUNDS = session->NUM_SOUNDS;
-		confirm->TIME_OUT = session->TIME_OUT;
-		confirm->RESP_TYPE = session->RESP_TYPE;
-		memcpy (confirm->FORWARDING_STA, session->FORWARDING_STA, sizeof (confirm->FORWARDING_STA));
+		confirm->TIME_OUT = 0x06;		// Force this to be 0x06 to satisfy the spec. Jack Jin 03/13/2024.
+		confirm->RESP_TYPE = 0x01; 		// Force this to be 0x01 to satisfy the spec. Jack Jin 03/13/2024.
+		memcpy (confirm->FORWARDING_STA, session->PEV_MAC, sizeof (confirm->FORWARDING_STA));  // Set forwarding_sta to pev_mac to satisfy the spec. Jack Jin 03/13/2024.
 		confirm->APPLICATION_TYPE = session->APPLICATION_TYPE;
 		confirm->SECURITY_TYPE = session->SECURITY_TYPE;
 		memcpy (confirm->RunID, session->RunID, sizeof (confirm->RunID));
